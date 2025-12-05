@@ -1,5 +1,6 @@
 package com.example.bookMS.service;
 
+import com.example.bookMS.exception.ResourceNotFoundException;
 import com.example.bookMS.model.*;
 import com.example.bookMS.repository.BookRepository;
 import jakarta.transaction.Transactional;
@@ -33,7 +34,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDTO getBook(Long bookId) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다. ID: " + bookId));
+                .orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 책입니다. ID: " + bookId));
         return BookMapper.toDTO(book);
     }
 
@@ -41,7 +42,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookDTO updateBook(Long bookId, BookDTO bookDTO) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다. ID: " + bookId));
+                .orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 책입니다. ID: " + bookId));
 
         BookMapper.updateEntity(book, bookDTO);
         bookRepository.save(book);
@@ -52,7 +53,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public void deleteBook(Long bookId) {
         if (!bookRepository.existsById(bookId)) {
-            throw new IllegalArgumentException("존재하지 않는 책입니다. ID: " + bookId);
+            throw new ResourceNotFoundException("존재하지 않는 책입니다. ID: " + bookId);
         }
         bookRepository.deleteById(bookId);
     }
@@ -61,7 +62,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookDTO updateBookCover(Long bookId, String coverUrl) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다. ID: " + bookId));
+                .orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 책입니다. ID: " + bookId));
 
         book.setCoverImageUrl(coverUrl);
         bookRepository.save(book);
