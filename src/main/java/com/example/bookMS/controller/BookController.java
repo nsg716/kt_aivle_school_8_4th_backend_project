@@ -25,7 +25,7 @@ public class BookController {
 
     // 도서 조회
     @GetMapping("/{bookId}")
-    public ResponseEntity<BookDTO> getBook(@PathVariable Long bookId) {
+    public ResponseEntity<BookDTO> getBook(@PathVariable("bookId") Long bookId) {
         BookDTO book = bookService.getBook(bookId);
         return ResponseEntity.ok(book);
     }
