@@ -1,3 +1,4 @@
+// src/main/java/com/example/bookMS/service/BookService.java
 package com.example.bookMS.service;
 
 import com.example.bookMS.model.BookDTO;
@@ -9,8 +10,11 @@ public interface BookService {
     // 도서 생성
     BookDTO createBook(BookDTO bookDTO);
 
-    // 도서 목록 조회
+    // 🔹 전체 도서 목록
     List<BookDTO> getBookList();
+
+    // 🔹 특정 userId의 도서 목록
+    List<BookDTO> getBookListByUser(Long userId);
 
     // 도서 단건 조회
     BookDTO getBook(Long bookId);

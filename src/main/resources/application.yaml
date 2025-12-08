@@ -16,6 +16,9 @@ spring:
       ddl-auto: create
     show-sql: true
 
+openai:
+  api:
+    key: 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
 
 # 로깅 설정
 logging:

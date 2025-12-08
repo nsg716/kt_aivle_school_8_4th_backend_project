@@ -1,7 +1,10 @@
+// src/main/java/com/example/bookMS/service/BookServiceImpl.java
 package com.example.bookMS.service;
 
 import com.example.bookMS.exception.ResourceNotFoundException;
-import com.example.bookMS.model.*;
+import com.example.bookMS.model.Book;
+import com.example.bookMS.model.BookDTO;
+import com.example.bookMS.model.BookMapper;
 import com.example.bookMS.repository.BookRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +28,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDTO> getBookList() {
-        List<Book> bookList = bookRepository.findAll();
-        return bookList.stream()
+        return bookRepository.findAll()
+                .stream()
+                .map(BookMapper::toDTO)
+                .toList();
+    }
+
+    // 🔹 특정 userId의 책만 조회
+    @Override
+    public List<BookDTO> getBookListByUser(Long userId) {
+        return bookRepository.findByUserId(userId)
+                .stream()
                 .map(BookMapper::toDTO)
                 .toList();
     }

@@ -17,7 +17,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
-    @Column(length = 500)
+    @Column(length =500)
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -25,6 +25,10 @@ public class Book {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    @Column(length = 1000)
+    @Column(length =1000)
     private String coverImageUrl;
+
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 }
