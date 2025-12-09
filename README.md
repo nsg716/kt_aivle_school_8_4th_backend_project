@@ -9,6 +9,17 @@
   Backend : 나도요, 나성곤, 정성호<br>
   Frontend : 이정민, 이동규, 조유송<br>
 
+## Architecture
+
+    React (Vite)
+       ↓
+    Spring Boot REST API
+       ↓
+    JPA (H2 Database)
+       ↓
+    Book Entity
+
+  
 ## 📋 프로젝트 목표
 
 ### 학습 목표
