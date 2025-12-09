@@ -3,23 +3,13 @@
   Spring Boot 기반 백엔드 API 서버 프로젝트입니다.<br>
   프론트엔드(Vite + React)와 연동되며, REST API를 제공하는 역할을 수행합니다.
 
+[![Frontend](https://img.shields.io/badge/Frontend-Readme.md-blue)](https://github.com/JeongminYi/kt_aivle_school_8_4th_frontend_project/blob/main/README.md)
 ## 👥 Team Structure
 
   PM : 조유송 <br>
   Backend : 나도요, 나성곤, 정성호<br>
   Frontend : 이정민, 이동규, 조유송<br>
 
-## Architecture
-
-    React (Vite)
-       ↓
-    Spring Boot REST API
-       ↓
-    JPA (H2 Database)
-       ↓
-    Book Entity
-
-  
 ## 📋 프로젝트 목표
 
 ### 학습 목표
@@ -39,6 +29,16 @@
 - CRUD (Create, Read, Update, Delete) 기능의 완전한 구현
 - 실제 외부 API를 연동하여 동적인 기능을 추가하는 경험
 - 기본적인 UI/UX 설계를 통한 사용자 친화적인 애플리케이션 제작
+
+## Architecture
+
+    React (Vite)
+       ↓
+    Spring Boot REST API
+       ↓
+    JPA (H2 Database)
+       ↓
+    Book Entity
 
 ## Skills
 
