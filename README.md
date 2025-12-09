@@ -105,9 +105,91 @@
 
 <!--## 배포정보--> 
 
+## ⚙️ 주요 API 설명
+
+<table> 
+  <thead> 
+    <tr> 
+      <th align="center">HTTP Method</th> 
+      <th align="center">Endpoint</th> 
+      <th align="center">Description</th> 
+      <th align="center">Request Body</th> 
+      <th align="center">Response</th> 
+    </tr> 
+  </thead> 
+  <tbody> <tr> 
+    <td align="center"><strong>GET</strong></td> 
+    <td><code>/api/books</code></td> 
+    <td>도서 목록 조회</td> <td align="center">-</td> 
+    <td><code>List&lt;BookDTO&gt;</code></td> 
+  </tr> 
+    <tr> 
+      <td align="center"><strong>GET</strong></td> 
+      <td><code>/api/books/{bookId}</code></td> 
+      <td>도서 상세 조회</td> 
+      <td align="center">-</td> 
+      <td><code>BookDTO</code></td> </tr> 
+    <tr> 
+      <td align="center"><strong>POST</strong></td> 
+      <td><code>/api/books</code></td> 
+      <td>신규 도서 등록</td> 
+      <td><code>BookDTO</code></td> 
+      <td><code>BookDTO</code> <br/> (<strong>201 Created</strong>)</td> 
+      </tr> 
+    <tr> 
+      <td align="center"><strong>PUT</strong></td> 
+      <td><code>/api/books/{bookId}</code></td> 
+      <td>도서 정보 수정</td> 
+      <td><code>BookDTO</code></td> 
+      <td><code>BookDTO</code></td> 
+    </tr> 
+    <tr> 
+      <td align="center"><strong>DELETE</strong></td> 
+      <td><code>/api/books/{bookId}</code></td> 
+      <td>도서 삭제</td> 
+      <td align="center">-</td> 
+      <td><strong>204 No Content</strong></td> 
+    </tr> 
+    <tr> 
+      <td align="center"><strong>PATCH</strong></td> 
+      <td><code>/api/books/{bookId}/cover</code></td> 
+      <td>도서 표지 이미지 수정</td> 
+      <td> <code>{ "coverImageUrl": "string" }</code> </td> 
+      <td><code>BookDTO</code></td> 
+    </tr> 
+  </tbody> 
+</table>
+
+<br>
+
+  ### 1. 도서 목록 조회 (GET `/api/books`)
+  - 등록된 모든 도서의 목록을 조회합니다.
+  - 도서 제목, 등록일 등 기본 정보를 제공합니다.
+  
+  ### 2. 도서 상세 조회 (GET `/api/books/{bookId}`)
+  - 특정 도서의 상세 정보를 조회합니다.
+  - 표지 이미지, 작성일, 수정일, 본문 내용을 포함합니다.
+  
+  ### 3. 신규 도서 등록 (POST `/api/books`)
+  - 새로운 도서를 등록합니다.
+  - 제목, 내용 등 필수 정보를 입력받습니다.
+  - 유효성 검사(공백 금지 등)를 수행합니다.
+  
+  ### 4. 도서 정보 수정 (PUT `/api/books/{bookId}`)
+  - 기존 도서의 정보를 수정합니다.
+  - 기존 정보를 자동으로 불러와 수정 후 저장할 수 있습니다.
+  
+  ### 5. 도서 삭제 (DELETE `/api/books/{bookId}`)
+  - 더 이상 필요 없는 도서를 삭제합니다.
+  - 삭제 시 확인 알림을 제공하며, 목록에서 즉시 반영됩니다.
+  
+  ### 6. AI 표지 이미지 생성 (PATCH `/api/books/{bookId}/cover`)
+  - OpenAI DALL·E API를 활용하여 도서 내용 기반 표지 이미지를 자동 생성합니다.
+  - 생성된 표지 이미지 URL을 데이터베이스에 저장합니다.
+  - 도서 내용을 분석하여 어울리는 시각적 표현을 제공합니다.
 
 
-    
+
 
     
 
