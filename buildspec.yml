@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+    commands:
+      - chmod +x ./gradlew
+
+  pre_build:
+    commands:
+      - echo "Pre-build phase started"
+
+  build:
+    commands:
+      - ./gradlew clean build -x test
+      - echo "Build completed."
+    finally:
+      - echo "This is the finally block execution!"
+
+artifacts:
+  files:
+    - build/libs/*.jar
+    - appspec.yml
+    - deploy-scripts/**/*
