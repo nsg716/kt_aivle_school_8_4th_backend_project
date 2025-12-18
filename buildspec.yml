@@ -1,9 +1,14 @@
 version: 0.2
+
 phases:
+  pre_build:
+    commands:
+      - chmod +x ./gradlew
   build:
     commands:
       - ./gradlew clean bootJar
-      - chmod +x scripts/*.sh || true
+
+
 artifacts:
   files:
     - appspec.yml
