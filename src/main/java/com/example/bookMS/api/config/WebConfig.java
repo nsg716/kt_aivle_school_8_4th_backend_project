@@ -9,17 +9,17 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
+        registry.addMapping("/api/*")
                 .allowedOrigins(
-                        "http://localhost:5173",
-                        "https://kt-aivle-school-8-4th-frontend-project-btg6fwyyh.vercel.app",
-                        "http://a085009-front-prod.s3-website-ap-southeast-1.amazonaws.com",
-                        "http://a087013-frontend-website.s3-website-ap-southeast-1.amazonaws.com"
-
+                        "http://localhost:5173/",
+                        "https://kt-aivle-school-8-4th-frontend-project-btg6fwyyh.vercel.app/",
+                        "http://a085009-front-prod.s3-website-ap-southeast-1.amazonaws.com/",
+                        "http://a087013-frontend-website.s3-website-ap-southeast-1.amazonaws.com/"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-                .allowedHeaders("*")
-//                .allowCredentials(true)
+                .allowedHeaders("")
                 .maxAge(3600);
+        // 쿠키/세션 안 쓰면 allowCredentials는 빼는게 안전
+        // .allowCredentials(true);
     }
 }
