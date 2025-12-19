@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: build/libs/app.jar
+  - source: build/libs/*.jar
     destination: /opt/myapp
 
 hooks:
