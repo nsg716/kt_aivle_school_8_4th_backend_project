@@ -1,18 +1,23 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      java: corretto17
+  pre_build:
     commands:
-      - chmod +x ./gradlew
+      - echo "Login to Amazon ECR"
+      - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com
+      # 리포지토리 이름을 EKS가 찾는 이름과 동일하게 수정
+      - IMAGE_URI=416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot
 
   build:
     commands:
-      - ./gradlew clean build -x test
+      - echo "Build Spring Boot"
+      - chmod +x ./gradlew
+      - ./gradlew build -x test
+      - echo "Docker build"
+      - docker build -t $IMAGE_URI:latest .
 
-artifacts:
-  files:
-    - build/libs/*.jar
-    - appspec.yml
-    - scripts/**/*
+  post_build:
+    commands:
+      - echo "Push image to ECR"
+      - docker push $IMAGE_URI:latest
+      - echo "Build completed on `date`"
