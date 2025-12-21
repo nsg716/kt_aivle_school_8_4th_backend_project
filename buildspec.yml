@@ -5,33 +5,22 @@ phases:
     commands:
       - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com
-      - REPOSITORY_URI=416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - echo "Repository URI = $REPOSITORY_URI"
-      - echo "Image Tag = $IMAGE_TAG"
-
   build:
     commands:
-      - echo "Build started on $(date)"
+      - echo "Building Spring Boot..."
+      - chmod +x ./gradlew
+      - ./gradlew clean build -x test
       - echo "Building Docker image..."
-      - docker build -t $REPOSITORY_URI:latest -t $REPOSITORY_URI:$IMAGE_TAG .
-      - echo "Docker images built successfully"
-      - docker images
-
+      # 변수를 쓰지 말고 이름을 직접 박으세요 (중요!)
+      - docker build -t 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest .
   post_build:
     commands:
-      - echo "Build completed on $(date)"
-      - echo "Pushing Docker images to ECR..."
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo "Docker images pushed successfully"
-      - echo "Writing image definitions file..."
-      - printf '[{"name":"ai0917-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - cat imagedefinitions.json
+      - echo "Pushing to ECR..."
+      # 여기도 이름을 직접 박으세요
+      - docker push 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest
+      - echo "Push completed."
+      - printf '[{"name":"ai0917-backend","imageUri":"416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest"}]' > imagedefinitions.json
 
 artifacts:
   files:
     - imagedefinitions.json
-    - eks-manifest/**/*
-  name: BuildArtifact
