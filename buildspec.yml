@@ -7,6 +7,7 @@ phases:
       - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com
       - REPOSITORY_URI=416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot
       - IMAGE_TAG=latest
+      - echo "Repository URI = $REPOSITORY_URI"
 
   build:
     commands:
@@ -15,13 +16,17 @@ phases:
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
       - echo "Building Docker image..."
-      # 여기서 이미지 이름을 리포지토리 주소와 동일하게 맞춥니다.
       - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - docker images
 
   post_build:
     commands:
       - echo "Build completed on `date`"
       - echo "Pushing the Docker image..."
-      # 생성된 이미지를 ECR로 밀어넣습니다.
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo "Push completed."
+      - printf '[{"name":"ai0917-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
