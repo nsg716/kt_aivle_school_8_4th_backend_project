@@ -3,44 +3,35 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo "1. Logging in to Amazon ECR..."
+      - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com
-      
-      # 변수 오타 방지를 위해 명시적으로 선언
       - REPOSITORY_URI=416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot
-      - IMAGE_TAG=latest
-      
-      - echo "2. Configuring kubectl for EKS..."
-      # 배포를 위해 EKS 접속 정보를 업데이트합니다.
-      - aws eks update-kubeconfig --region ap-southeast-1 --name ai0917-backend-eks
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo "Repository URI = $REPOSITORY_URI"
+      - echo "Image Tag = $IMAGE_TAG"
 
   build:
     commands:
-      - echo "3. Build started on `date`"
-      - echo "Building Spring Boot JAR..."
-      - chmod +x ./gradlew
-      - ./gradlew clean build -x test
-      
-      - echo "4. Building Docker image..."
-      # 빌드 시 태그가 정확히 박히는지 확인
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - echo "Build started on $(date)"
+      - echo "Building Docker image..."
+      - docker build -t $REPOSITORY_URI:latest -t $REPOSITORY_URI:$IMAGE_TAG .
+      - echo "Docker images built successfully"
       - docker images
 
   post_build:
     commands:
-      - echo "5. Build completed on `date`"
-      - echo "Pushing the Docker image..."
+      - echo "Build completed on $(date)"
+      - echo "Pushing Docker images to ECR..."
+      - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo "Push completed."
-      
-      - echo "6. Updating EKS Deployment..."
-      # ECR에 푸시한 최신 이미지를 포드가 즉시 사용하도록 강제 재시작 명령
-      - kubectl rollout restart deployment/ai0917-backend
-      
-      - echo "7. Generating Artifact..."
+      - echo "Docker images pushed successfully"
+      - echo "Writing image definitions file..."
       - printf '[{"name":"ai0917-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - cat imagedefinitions.json
 
 artifacts:
   files:
     - imagedefinitions.json
-    - eks-manifests/* # 만약 YAML 파일들이 특정 폴더에 있다면 함께 넘겨주는 것이 좋습니다.
+    - eks-manifest/**/*
+  name: BuildArtifact
