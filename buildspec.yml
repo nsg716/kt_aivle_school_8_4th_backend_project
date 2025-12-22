@@ -16,7 +16,7 @@ phases:
     commands:
       - echo "Pushing to ECR..."
       - docker push 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest
-      - echo "Deployment completed."
+      - echo "Deployment completed.."
       - printf '[{"name":"ai0917-backend","imageUri":"416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest"}]' > imagedefinitions.json
 
 artifacts:
