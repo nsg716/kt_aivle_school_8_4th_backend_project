@@ -5,13 +5,15 @@ phases:
     commands:
       - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com
+      - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      - chmod +x kubectl
+      - mv ./kubectl /usr/local/bin/kubectl
   build:
     commands:
       - echo "Building Spring Boot..."
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
       - echo "Building Docker image..."
-      # 변수를 쓰지 말고 이름을 직접 박으세요 (중요!)
       - docker build -t 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest .
   post_build:
     commands:
