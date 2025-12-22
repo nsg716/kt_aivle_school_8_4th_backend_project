@@ -12,7 +12,8 @@ metadata:
     # 만약 스프링 코드의 @CrossOrigin이 작동하지 않는다면 아래 주석들을 활성화하세요.
     alb.ingress.kubernetes.io/cors-allow-origin: "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com"
     alb.ingress.kubernetes.io/cors-allow-methods: GET, PUT, POST, DELETE, OPTIONS
-    alb.ingress.kubernetes.io/cors-allow-origin: "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com, https://d37difhmoiykfd.cloudfront.net"    alb.ingress.kubernetes.io/cors-expose-headers: "*"
+    alb.ingress.kubernetes.io/cors-allow-origin: "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com, https://d37difhmoiykfd.cloudfront.net"
+    alb.ingress.kubernetes.io/cors-expose-headers: "*"
 spec:
   ingressClassName: alb
   rules:
