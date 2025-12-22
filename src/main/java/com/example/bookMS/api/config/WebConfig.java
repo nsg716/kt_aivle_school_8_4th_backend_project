@@ -15,7 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "https://kt-aivle-school-8-4th-frontend-project-btg6fwyyh.vercel.app",
                         "http://a085009-front-prod.s3-website-ap-southeast-1.amazonaws.com",
                         "http://a087013-frontend-website.s3-website-ap-southeast-1.amazonaws.com",
-                        "https://d37difhmoiykfd.cloudfront.net"
+                        "https://d37difhmoiykfd.cloudfront.net",
+                        "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
