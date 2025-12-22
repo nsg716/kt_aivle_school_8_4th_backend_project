@@ -11,10 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(
-                        "http://localhost:5173",
-                        "https://kt-aivle-school-8-4th-frontend-project-btg6fwyyh.vercel.app",
-                        "https://d37difhmoiykfd.cloudfront.net",
-                        "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com"
+                        // "http://localhost:5173",
+                        // "https://kt-aivle-school-8-4th-frontend-project-btg6fwyyh.vercel.app",
+                        // "https://d37difhmoiykfd.cloudfront.net",
+                        // "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com"
+                        "*"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
