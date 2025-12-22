@@ -11,12 +11,14 @@ phases:
       - chmod +x ./gradlew
       - ./gradlew clean build -x test
       - echo "Building Docker image..."
+      # 변수를 쓰지 말고 이름을 직접 박으세요 (중요!)
       - docker build -t 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest .
   post_build:
     commands:
       - echo "Pushing to ECR..."
+      # 여기도 이름을 직접 박으세요
       - docker push 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest
-      - echo "Deployment completed.."
+      - echo "Push completed."
       - printf '[{"name":"ai0917-backend","imageUri":"416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest"}]' > imagedefinitions.json
 
 artifacts:
