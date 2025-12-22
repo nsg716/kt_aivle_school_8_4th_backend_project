@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.5'
 description = 'kt_aivle_school_4th_project'
 
 java {
@@ -38,4 +38,16 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.named("bootJar"){
+	archiveFileName = "bookMS-${project.version}.jar"
+}
+
+tasks.named('processResources'){
+	expand(project.properties)
+}
+
+jar{
+	enabled = false // plain.jar 생성하지 않음
 }

@@ -18,7 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true)
                 .maxAge(3600);
+        // 쿠키/세션 안 쓰면 allowCredentials는 빼는게 안전
+        // .allowCredentials(true);
     }
 }

@@ -3,13 +3,15 @@ os: linux
 
 files:
   - source: build/libs/
-    destination: /home/ec2-user/app
+    destination: /opt/myapp
 
 hooks:
   BeforeInstall:
     - location: scripts/stop.sh
-      runas: ec2-user
+      timeout: 300
+      runas: root
 
-  ApplicationStart:
+  AfterInstall:
     - location: scripts/start.sh
-      runas: ec2-user
+      timeout: 300
+      runas: root

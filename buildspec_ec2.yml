@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - chmod +x ./gradlew
+  build:
+    commands:
+      - ./gradlew clean bootJar
+      - ./gradlew -q properties | grep "^version:"
+      - ls -al build/libs
+
+artifacts:
+  files:
+    - appspec_ec2.yml
+    - scripts/**/*
+    - build/libs/*.jar
