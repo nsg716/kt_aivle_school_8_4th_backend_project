@@ -5,9 +5,6 @@ phases:
     commands:
       - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com
-      - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-      - chmod +x kubectl
-      - mv ./kubectl /usr/local/bin/kubectl
   build:
     commands:
       - echo "Building Spring Boot..."
@@ -19,12 +16,6 @@ phases:
     commands:
       - echo "Pushing to ECR..."
       - docker push 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest
-      - echo "Updating Kubeconfig..."
-      - aws eks update-kubeconfig --region ap-southeast-1 --name ai0917-backend-eks
-      - echo "Applying Kubernetes Manifests..."
-      - kubectl apply -f deployment.yaml
-      - kubectl apply -f service.yaml
-      - kubectl apply -f ingress.yaml
       - echo "Deployment completed."
       - printf '[{"name":"ai0917-backend","imageUri":"416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest"}]' > imagedefinitions.json
 
