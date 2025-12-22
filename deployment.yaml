@@ -16,6 +16,6 @@ spec:
       containers:
         - name: backend
           image: 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest
-          imagePullPolicy: Always  # 이 부분 추가
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
