@@ -10,9 +10,8 @@ metadata:
     alb.ingress.kubernetes.io/success-codes: 200,204,302
     # [중요] Ingress에서 직접 CORS 헤더를 제어하고 싶을 때 추가하는 설정 (옵션)
     # 만약 스프링 코드의 @CrossOrigin이 작동하지 않는다면 아래 주석들을 활성화하세요.
-    alb.ingress.kubernetes.io/cors-allow-origin: "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com"
     alb.ingress.kubernetes.io/cors-allow-methods: GET, PUT, POST, DELETE, OPTIONS
-    alb.ingress.kubernetes.io/cors-allow-origin: "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com, https://d37difhmoiykfd.cloudfront.net"
+    alb.ingress.kubernetes.io/cors-allow-origin: "http://ai0917-front-prod.s3-website-ap-southeast-1.amazonaws.com, https://d37difhmoiykfd.cloudfront.net,http://d37difhmoiykfd.cloudfront.net,"
     alb.ingress.kubernetes.io/cors-expose-headers: "*"
 spec:
   ingressClassName: alb
