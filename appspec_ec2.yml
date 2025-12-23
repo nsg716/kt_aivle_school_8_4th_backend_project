@@ -5,9 +5,16 @@ files:
   - source: build/libs/
     destination: /opt/myapp
 
+file_exists_behavior: OVERWRITE
+
 hooks:
-  BeforeInstall:
+  ApplicationStop:
     - location: scripts/stop.sh
+      timeout: 300
+      runas: root
+
+  BeforeInstall:
+    - location: scripts/before_install.sh
       timeout: 300
       runas: root
 

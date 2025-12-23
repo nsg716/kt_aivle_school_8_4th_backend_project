@@ -6,12 +6,20 @@ phases:
       - chmod +x ./gradlew
   build:
     commands:
+      - cp appspec_ec2.yml appspec.yml
       - ./gradlew clean bootJar
       - ./gradlew -q properties | grep "^version:"
       - ls -al build/libs
+  post_build:
+    commands:
+      - echo "PWD=$(pwd)"
+      - ls -al
+      - ls -al appspec*
+      - echo "=== find appspec.yml ==="
+      - find . -maxdepth 4 -name "appspec.yml" -print
 
 artifacts:
   files:
-    - appspec_ec2.yml
+    - appspec.yml
     - scripts/**/*
     - build/libs/*.jar
